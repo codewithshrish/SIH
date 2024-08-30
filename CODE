@@ -1,0 +1,175 @@
+import streamlit as Streamlit
+
+# Custom CSS for a blue button, search box with dropdown, and camera icon
+Streamlit.markdown(
+    """
+    <style>
+    .top-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: top-right corner;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .top-button:hover {
+        background-color: #0056b3;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border: 2px solid #ccc;
+        border-radius: 25px;
+        background-color: #f9f9f9;
+    }
+
+    .search-box select {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 16px;
+        color: #888;
+        flex-grow: 1;
+        cursor: pointer;
+    }
+
+    .search-box i {
+        font-size: 18px;
+        color: #007BFF;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .camera-icon {
+        margin-left: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        color: green;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Create a button on the top right corner
+if Streamlit.markdown('<div class="top-button">Register/Verify</div>', unsafe_allow_html=True):
+    Streamlit.write("")
+
+# Title
+Streamlit.subheader("Stay Ahead of Crop Diseases with Cutting-Edge AI Technology!")
+
+# Sidebar navigation
+Streamlit.sidebar.markdown("### Navigation")
+Streamlit.sidebar.markdown("Home")
+Streamlit.sidebar.markdown("About Us")
+
+# Services section in the sidebar
+Streamlit.sidebar.markdown("### Services")
+with Streamlit.sidebar.expander("Select a Service"):
+    user_choice = Streamlit.selectbox("", ["Disease Detection", "Crop Management", "AI Analytics"])
+    Streamlit.write(f"You selected: {user_choice}")
+
+Streamlit.sidebar.markdown("Resources")
+Streamlit.sidebar.markdown("Contact Us")
+Streamlit.sidebar.markdown("Help")
+
+# Main page
+if user_choice == "Disease Detection":
+    Streamlit.markdown("🦠 AI-Powered Disease Detection")
+    Streamlit.write("Our cutting-edge technology helps in early detection and management of crop diseases.")
+
+    # Implementing search box for selecting crop name with dropdown and camera icon
+    Streamlit.markdown("### Select the Crop")
+    crop_list = ["Wheat", "Rice", "Corn", "Soybean", "Cotton"]
+    
+    # Create the HTML for the search box with a dropdown and a camera icon
+    Streamlit.markdown(
+        f"""
+        <div class="search-box">
+            <select>
+                <option value="" disabled selected>Select the crop name</option>
+                {''.join([f'<option value="{crop}">{crop}</option>' for crop in crop_list])}
+            </select>
+            <i class="fas fa-caret-down"></i>
+            <i class="fas fa-camera camera-icon" onclick="startCamera()"></i>
+        </div>
+
+        <script>
+        function startCamera() {{
+            navigator.mediaDevices.getUserMedia({{ video: true }})
+            .then(function(stream) {{
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.play();
+                document.body.appendChild(video);
+            }})
+            .catch(function(err) {{
+                console.log('Error: ' + err);
+            }});
+        }}
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
+
+elif user_choice == "Crop Management":
+    Streamlit.markdown("🚜 Comprehensive Crop Management")
+    Streamlit.write("Optimize your crop management with our advanced tools and insights.")
+
+elif user_choice == "AI Analytics":
+    Streamlit.markdown("📊 Advanced AI Analytics")
+    Streamlit.write("Leverage AI-driven analytics for better decision-making and higher yields.")
+
+if user_choice == "Help":
+    Streamlit.markdown("## Step 1: Registration and Verification")
+    Streamlit.write("Start by registering on our web portal or app. Once registered, your account will be verified.")
+
+    Streamlit.markdown("## Step 2: Select the Crop")
+    Streamlit.write("Choose the crop name from the list provided in the system.")
+
+    Streamlit.markdown("## Step 3: Capture/Upload Image")
+    Streamlit.write("Capture an image or upload an existing image of the crop you want to diagnose.")
+
+    Streamlit.markdown("## Step 4: Image Preprocessing")
+    Streamlit.write("The image is preprocessed to ensure it meets the required quality standards.")
+
+    Streamlit.markdown("## Step 5: Image Processing and Disease Identification")
+    Streamlit.write(
+        "Our pre-trained AI model processes the image, comparing it with known patterns of crop diseases to identify any issues.")
+
+    Streamlit.markdown("## Step 6: Disease Report")
+    Streamlit.write(
+        "The system generates a detailed report containing plant statistics and suggested solutions for managing the identified diseases.")
+# Footer
+Streamlit.markdown("---")
+Streamlit.write("© 2024 AI-Crop. All rights reserved.")
+import streamlit as st
+
+# Title of the web app
+st.title('AI Crop Detector App with AI Bot')
+
+# Add a sidebar for user input
+user_input = st.text_input('Enter your query here:')
+st.write('You entered:', user_input)
+st.button("Submit")
+
+# Add camera feature
+if st.button('Open Camera'):
+    st.write('Camera is now on...')  # Placeholder for camera functionality
+
+# Microphone feature
+audio_file = st.file_uploader('Upload your audio file:', type=['mp3', 'wav'])
+if audio_file is not None:
+    st.audio(audio_file, format='audio/wav')
+
+# AI Bot feature
+st.write('AI Bot is ready to assist you!')  # Placeholder for AI Bot functionality
+
+# Footer text
+st.text('© 2023 AI Crop Detector. All rights reserved.')
